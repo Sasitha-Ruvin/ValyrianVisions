@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">ValyrianVisions</string>
+    <string name="LoadScreenButtonText">Get Started</string>
+    <string name="LoginWelcome">Welcome</string>
+    <string name="immerse_in_art">Immerse in Art</string>
+    <string name="offertext">Enjoy 20% Off Featured Artworks</string>
+    <string name="SignUpText">Create Your Account</string>
+    <string name="sign_up_button">Sign Up</string>
+//Featured Products
+    <string name="featured_product1_name">The Waves</string>
+    <string name="product1_price">15$</string>
+
+    <string name="featured_product2_name">Sunset</string>
+    <string name="product2_price">20$</string>
+
+    <string name="featured_product3_name">The Trooper</string>
+    <string name="product3_price">12$</string>
+
+    <string name="featured_product4_name">A City</string>
+    <string name="product4_price">15$</string>
+
+    <string name="featured_product5_name">The Samurai</string>
+    <string name="product5_price">15$</string>
+
+    <string name="featured_product6_name">The Ship</string>
+    <string name="product6_price">15$</string>
+    <string name="product_image">product_image</string>
+
+//Top Artists
+    <string name="artist_1">John Doe</string>
+    <string name="artist_2">Jane Doe</string>
+    <string name="artist_3">Micheal Jordan</string>
+    <string name="artist_4">John Carter</string>
+    <string name="artist_5">Lisa McMillan</string>
+    <string name="artist_6">Richard Smith</string>
+    <string name="featured_artists">Featured Artists</string>
+</resources>
