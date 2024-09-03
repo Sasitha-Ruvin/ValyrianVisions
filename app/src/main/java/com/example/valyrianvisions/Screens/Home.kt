@@ -43,8 +43,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.valyrianvisions.AuthState
-import com.example.valyrianvisions.AuthViewModel
+import com.example.valyrianvisions.Authentications.AuthState
+import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.data.ArtistSource
@@ -347,7 +347,8 @@ fun FeaturedArtistCard(artists: Artists, modifier: Modifier = Modifier){
         .height(100.dp)
         .clip(CircleShape)
     )
-    { Column {
+    {
+        Column {
         Image(painter = painterResource(artists.imageResourceId), contentDescription = null,
             contentScale = ContentScale.Crop, modifier = Modifier
                 .height(100.dp)
@@ -355,8 +356,7 @@ fun FeaturedArtistCard(artists: Artists, modifier: Modifier = Modifier){
                 .clip(
                     CircleShape
                 ))
-    }
-
+        }
     }
 }
 
@@ -370,3 +370,28 @@ fun FeaturedArtistList(artistList: List<Artists>, modifier: Modifier = Modifier)
     }
 }
 
+//Category Text
+@Composable
+fun CategoriesText(){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(R.string.categories),
+            fontSize = 20.sp,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}
+
+//Catergory Buttons
+@Composable
+fun CategotyButtons(){
+
+}

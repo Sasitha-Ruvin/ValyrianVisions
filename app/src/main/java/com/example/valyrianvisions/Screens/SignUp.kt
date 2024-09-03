@@ -49,8 +49,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.valyrianvisions.AuthState
-import com.example.valyrianvisions.AuthViewModel
+import com.example.valyrianvisions.Authentications.AuthState
+import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.R
 
 @Composable

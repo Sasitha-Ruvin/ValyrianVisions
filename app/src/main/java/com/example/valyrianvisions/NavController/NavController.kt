@@ -1,4 +1,4 @@
-package com.example.valyrianvisions
+package com.example.valyrianvisions.NavController
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,14 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.Screens.CartScreen
 import com.example.valyrianvisions.Screens.DetailedProductView
 import com.example.valyrianvisions.Screens.HomeScreen
-import com.example.valyrianvisions.Screens.LoadScreen
 import com.example.valyrianvisions.Screens.LoginScreen
 import com.example.valyrianvisions.Screens.SignUpScreen
 import com.example.valyrianvisions.Screens.UserProfile
-import com.example.valyrianvisions.ViewModels.SharedViewModel
 import com.example.valyrianvisions.data.DataSource
 
 @Composable

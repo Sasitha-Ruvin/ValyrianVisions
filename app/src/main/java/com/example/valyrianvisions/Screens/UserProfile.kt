@@ -37,8 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.valyrianvisions.AuthState
-import com.example.valyrianvisions.AuthViewModel
+import com.example.valyrianvisions.Authentications.AuthState
+import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 

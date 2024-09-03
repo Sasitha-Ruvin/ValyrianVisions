@@ -4,15 +4,20 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.sharp.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -30,41 +35,39 @@ fun DetailedProductView(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    var startAnimation by remember{ mutableStateOf(false) }
+    var startAnimation by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         startAnimation = true
     }
 
     val offsetX by animateDpAsState(
-        targetValue = if(startAnimation) 0.dp else 3000.dp,
+        targetValue = if (startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 400)
     )
     // Quantity state
     var quantity by remember { mutableStateOf(1) }
+    // Rating state
+    var rating by remember { mutableStateOf(0) }
 
-    ScreenWithTopBarAndBottomNav(navController = navController) { innerPadding->
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .offset(y = offsetX)
-            .background(MaterialTheme.colorScheme.onPrimary)) {
+    ScreenWithTopBarAndBottomNav(navController = navController) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(y = offsetX)
+                .background(MaterialTheme.colorScheme.onPrimary)
+        ) {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+            Spacer(modifier = Modifier.height(35.dp))
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Top,
+                    .padding(16.dp)
+                    .padding(vertical = 12.dp),
 
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Absolute.Left,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(35.dp))
 
                 // Product Image
                 Image(
@@ -91,7 +94,25 @@ fun DetailedProductView(
                     )
 
                     // Wishlist Button
-                    Icon(imageVector = Icons.Sharp.FavoriteBorder, contentDescription = "Wishlist")
+                    TextButton(onClick = { /*TODO*/ })
+                    {
+                        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Wishlist")
+
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(
+                        text = "by",
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        text = "John Doe",
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -102,7 +123,9 @@ fun DetailedProductView(
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 20.sp
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 // Product Description
                 Text(
                     text = "captures the serene and mysterious beauty of the cosmos. The artwork portrays a vast expanse of deep, velvety darkness punctuated by countless twinkling stars.",
@@ -110,6 +133,26 @@ fun DetailedProductView(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Star Rating
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    (1..5).forEach { index ->
+                        Icon(
+                            imageVector = if (index < rating) Icons.Filled.Star else Icons.Outlined.Star,
+                            contentDescription = "Star Rating",
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clickable {
+                                    rating = index
+                                }
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -130,16 +173,9 @@ fun DetailedProductView(
                     TextButton(onClick = { quantity++ }) {
                         Text(text = "+", fontSize = 24.sp)
                     }
-                }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                )
-                {
                     // Add to Cart Button
                     Button(
                         onClick = { /* Add product to cart */ },
@@ -149,20 +185,13 @@ fun DetailedProductView(
                     ) {
                         Text(text = "Add to Cart")
                     }
-                    // Buy Button
-                    Button(
-                        onClick = { /* Handle buy now */ },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 32.dp),
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.scrim)
-                    ) {
-                        Text(text = "Buy")
-                    }
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+
             }
         }
-
-
     }
 }
+

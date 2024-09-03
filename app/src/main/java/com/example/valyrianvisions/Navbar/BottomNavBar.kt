@@ -4,11 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -41,14 +43,17 @@ fun BottomNav(navController: NavController, modifier: Modifier){
             modifier = Modifier
                 .clickable { navController.navigate("home") }
                 .size(24.dp))
+        Spacer(modifier = Modifier.width(25.dp))
         Icon(imageVector = Icons.Outlined.LocationOn, contentDescription = "Explore",
             modifier = Modifier
                 .clickable { navController.navigate("explore") }
                 .size(24.dp))
+        Spacer(modifier = Modifier.width(25.dp))
         Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Saved",
             modifier = Modifier
                 .clickable { navController.navigate("saved") }
                 .size(24.dp))
+        Spacer(modifier = Modifier.width(25.dp))
         Icon(imageVector = Icons.Outlined.Person, contentDescription = "Profile",
             modifier = Modifier
                 .clickable { navController.navigate("profile") }

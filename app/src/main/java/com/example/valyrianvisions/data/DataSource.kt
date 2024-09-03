@@ -30,3 +30,7 @@ class ArtistSource{
         )
     }
 }
+
+class Categories{
+
+}

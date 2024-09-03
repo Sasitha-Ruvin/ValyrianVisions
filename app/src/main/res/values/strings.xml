@@ -34,4 +34,5 @@
     <string name="artist_5">Lisa McMillan</string>
     <string name="artist_6">Richard Smith</string>
     <string name="featured_artists">Featured Artists</string>
+    <string name="categories">Categories</string>
 </resources>
