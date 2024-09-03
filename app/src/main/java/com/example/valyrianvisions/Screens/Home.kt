@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -104,22 +105,14 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
                     Spacer(modifier = Modifier.height(10.dp))
                     FeaturedProductList(pictureList = DataSource().loadPictures(), navController = navController)
                     Spacer(modifier = Modifier.height(25.dp))
+                    CategoriesText()
+                    CategoryButtons(navController = navController)
+                    Spacer(modifier = Modifier.height(25.dp))
                     ImageWithOverlay()
                     Spacer(modifier = Modifier.height(10.dp))
                     FeaturedArtistText()
                     Spacer(modifier = Modifier.height(10.dp))
                     FeaturedArtistList(artistList = ArtistSource().loadArtists())
-
-                    Column(modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally)
-                    {
-                        TextButton(onClick = {authViewModel.signOut()}) {
-                            Text(text = "Sign Out")
-
-                        }
-
-                    }
                 }
             }
         }
@@ -392,6 +385,25 @@ fun CategoriesText(){
 
 //Catergory Buttons
 @Composable
-fun CategotyButtons(){
-
+fun CategoryButtons(navController: NavController) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp) // Spacing between buttons
+    ) {
+        items(listOf("Paintings", "Sketches", "Sculptures")) { category ->
+            Button(
+                onClick = { navController.navigate(category.lowercase()) }, // Navigate to category-specific screens
+                modifier = Modifier
+                    .height(40.dp)
+                    .padding(4.dp),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+            ) {
+                Text(text = category)
+            }
+        }
+    }
 }
+

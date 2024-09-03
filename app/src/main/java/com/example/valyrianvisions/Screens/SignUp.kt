@@ -99,8 +99,8 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                 horizontal = if (isLandscape) 16.dp else 32.dp,
                 vertical = if (isLandscape) 16.dp else 32.dp
             )
-            .padding(top = if (isLandscape) 1.dp else 180.dp)
-            .padding(bottom = if (isLandscape) 1.dp else 100.dp)
+            .padding(top = if (isLandscape) 1.dp else 100.dp)
+            .padding(bottom = if (isLandscape) 1.dp else 50.dp)
             .background(
                 color = Color.White.copy(alpha = 0.2f),
                 shape = RoundedCornerShape(24.dp)

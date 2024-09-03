@@ -1,4 +1,6 @@
 package com.example.valyrianvisions.Screens
 
-class Sketches {
-}
+import androidx.compose.runtime.Composable
+
+@Composable
+fun SketchesScreen(){}

@@ -22,7 +22,7 @@ fun ScreenWithTopBarAndBottomNav(
         TopBarSection(navController = navController)
 
         // Main Content
-        Box(modifier = Modifier.weight(1f)) {
+        Box(modifier = Modifier.weight(1f).background(MaterialTheme.colorScheme.background)) {
             content(Modifier.fillMaxSize())
         }
 

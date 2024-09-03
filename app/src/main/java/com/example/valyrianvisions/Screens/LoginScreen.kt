@@ -1,7 +1,9 @@
 package com.example.valyrianvisions.Screens
 
+import PlainTextVisualTransformation
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -20,8 +22,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -57,18 +64,18 @@ import com.example.valyrianvisions.R
 fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
     val authState = authViewModel.authstate.observeAsState()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    var startAnimation by remember{ mutableStateOf(false) }
-
+    var startAnimation by remember { mutableStateOf(false) }
 
     LaunchedEffect(authState.value) {
-        when(authState.value){
+        when (authState.value) {
             is AuthState.Authenticated -> navController.navigate("home")
             is AuthState.Error -> Toast.makeText(context,
-                (authState.value as AuthState.Error).message,Toast.LENGTH_SHORT).show()
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
             else -> Unit
         }
     }
@@ -77,7 +84,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
     }
 
     val offsetX by animateDpAsState(
-        targetValue = if(startAnimation) 0.dp else 1000.dp,
+        targetValue = if (startAnimation) 0.dp else 1000.dp,
         animationSpec = tween(durationMillis = 400)
     )
 
@@ -99,16 +106,16 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                 .fillMaxSize()
                 .padding(
                     horizontal = if (isLandscape) 16.dp else 32.dp,
-                    vertical = if (isLandscape) 16.dp else 32.dp
+                    vertical = if (isLandscape) 16.dp else 20.dp
                 )
                 .padding(top = if (isLandscape) 1.dp else 150.dp)
-                .padding(bottom = if (isLandscape) 1.dp else 180.dp)
+                .padding(bottom = if (isLandscape) 1.dp else 50.dp)
                 .background(
                     color = Color.White.copy(alpha = 0.2f), // Semi-transparent white
                     shape = RoundedCornerShape(24.dp) // Rounded corners
                 )
                 .clip(RoundedCornerShape(24.dp))
-                .padding(24.dp)
+                .padding(20.dp)
                 .verticalScroll(rememberScrollState()),
             contentAlignment = Alignment.Center
         ) {
@@ -128,7 +135,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                 // Welcome Text
                 Text(
                     text = stringResource(R.string.LoginWelcome),
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
@@ -143,7 +150,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.White, RoundedCornerShape(12.dp)),
-                    textStyle = TextStyle(fontSize = 25.sp, color = Color.Black),
+                    textStyle = TextStyle(fontSize = 15.sp, color = Color.Black),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
                         unfocusedLabelColor = Color.Gray
@@ -153,7 +160,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Password TextField
+                // Password TextField with Eye Icon
                 TextField(
                     value = password,
                     onValueChange = { password = it },
@@ -161,8 +168,19 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.White, RoundedCornerShape(12.dp)),
-                    textStyle = TextStyle(fontSize = 25.sp, color = Color.Black),
-                    visualTransformation = PasswordVisualTransformation(),
+                    textStyle = TextStyle(fontSize = 15.sp, color = Color.Black),
+                    visualTransformation = if (passwordVisible) PlainTextVisualTransformation() else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val image = if (passwordVisible)
+                            Icons.Filled.Visibility
+                        else Icons.Filled.VisibilityOff
+
+                        IconButton(onClick = {
+                            passwordVisible = !passwordVisible
+                        }) {
+                            Icon(imageVector = image, contentDescription = null)
+                        }
+                    },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
                         unfocusedLabelColor = Color.Gray
@@ -179,7 +197,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 25.dp)
+                        .padding(vertical = 15.dp)
                         .clip(CircleShape),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF21005D))
                 ) {
@@ -205,5 +223,4 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
         }
     }
 }
-
 

@@ -12,7 +12,11 @@ import com.example.valyrianvisions.Screens.CartScreen
 import com.example.valyrianvisions.Screens.DetailedProductView
 import com.example.valyrianvisions.Screens.HomeScreen
 import com.example.valyrianvisions.Screens.LoginScreen
+import com.example.valyrianvisions.Screens.PaintingsScreen
+import com.example.valyrianvisions.Screens.ProductsScreen
+import com.example.valyrianvisions.Screens.SculpturesScrren
 import com.example.valyrianvisions.Screens.SignUpScreen
+import com.example.valyrianvisions.Screens.SketchesScreen
 import com.example.valyrianvisions.Screens.UserProfile
 import com.example.valyrianvisions.data.DataSource
 
@@ -32,10 +36,22 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel){
             HomeScreen(modifier, navController, authViewModel)
         }
         composable("cart"){
-            CartScreen()
+            CartScreen(navController)
         }
         composable("profile"){
             UserProfile(navController, authViewModel)
+        }
+        composable("products"){
+            ProductsScreen()
+        }
+        composable("paintings"){
+            PaintingsScreen()
+        }
+        composable("sketches"){
+            SketchesScreen()
+        }
+        composable("sculptures"){
+            SculpturesScrren()
         }
         composable(
             route = "detailedProductView/{productId}",

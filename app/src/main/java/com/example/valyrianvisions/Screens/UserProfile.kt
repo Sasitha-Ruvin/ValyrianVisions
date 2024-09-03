@@ -67,7 +67,7 @@ fun UserProfile(navController:NavController,authViewModel: AuthViewModel){
     ScreenWithTopBarAndBottomNav(navController = navController) {innerPadding->
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(2.dp)
             .offset(x = offsetX)
             .background(MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally)

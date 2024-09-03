@@ -12,14 +12,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.sharp.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -183,7 +180,8 @@ fun DetailedProductView(
                             .weight(1f)
                             .padding(horizontal = 32.dp)
                     ) {
-                        Text(text = "Add to Cart")
+                        Text(text = "Add to Cart",
+                            style = MaterialTheme.typography.labelSmall)
                     }
                 }
 

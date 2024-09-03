@@ -1,4 +1,8 @@
 package com.example.valyrianvisions.Screens
 
-class Sculptures {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun SculpturesScrren(){
+
 }
