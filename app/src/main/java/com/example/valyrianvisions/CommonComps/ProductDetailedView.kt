@@ -1,5 +1,6 @@
 package com.example.valyrianvisions.Screens
 
+import CartViewModel
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -24,12 +25,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.model.CartItem
 import com.example.valyrianvisions.model.Pictures
 
 @Composable
 fun DetailedProductView(
     picture: Pictures,
     navController: NavController,
+    cartViewModel: CartViewModel,
     modifier: Modifier = Modifier
 ) {
     var startAnimation by remember { mutableStateOf(false) }
@@ -41,10 +44,10 @@ fun DetailedProductView(
         targetValue = if (startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 400)
     )
-    // Quantity state
     var quantity by remember { mutableStateOf(1) }
-    // Rating state
     var rating by remember { mutableStateOf(0) }
+    val name = stringResource(id = picture.stringResourceId)
+    val price = picture.price
 
     ScreenWithTopBarAndBottomNav(navController = navController) { innerPadding ->
         Box(
@@ -62,7 +65,6 @@ fun DetailedProductView(
                     .fillMaxSize()
                     .padding(16.dp)
                     .padding(vertical = 12.dp),
-
             ) {
                 Spacer(modifier = Modifier.height(35.dp))
 
@@ -90,11 +92,8 @@ fun DetailedProductView(
                         fontSize = 24.sp
                     )
 
-                    // Wishlist Button
-                    TextButton(onClick = { /*TODO*/ })
-                    {
+                    TextButton(onClick = { /*TODO*/ }) {
                         Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Wishlist")
-
                     }
                 }
 
@@ -114,16 +113,14 @@ fun DetailedProductView(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Product Price
                 Text(
-                    text = stringResource(id = picture.priceResourceId),
+                    text = "$${price.format(2)}",
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 20.sp
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Product Description
                 Text(
                     text = "captures the serene and mysterious beauty of the cosmos. The artwork portrays a vast expanse of deep, velvety darkness punctuated by countless twinkling stars.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -132,7 +129,6 @@ fun DetailedProductView(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Star Rating
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start,
@@ -153,7 +149,6 @@ fun DetailedProductView(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Quantity Controls
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -173,23 +168,27 @@ fun DetailedProductView(
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    // Add to Cart Button
                     Button(
-                        onClick = { /* Add product to cart */ },
+                        onClick = {
+                            val cartItem = CartItem(
+                                imageRes = picture.imageResourceId,
+                                name = name,
+                                price = price,
+                                quantity = quantity
+                            )
+                            cartViewModel.addItemToCart(cartItem)
+                        },
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = 32.dp)
                     ) {
-                        Text(text = "Add to Cart",
-                            style = MaterialTheme.typography.labelSmall)
+                        Text(text = "Add to Cart", style = MaterialTheme.typography.labelSmall)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-
             }
         }
     }
 }
-
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

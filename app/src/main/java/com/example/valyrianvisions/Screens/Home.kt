@@ -244,7 +244,7 @@ fun FeaturedProductCard(picture:Pictures, modifier: Modifier = Modifier,navContr
                     .fillMaxWidth()
                     .padding(10.dp)
             )
-            Text(text = stringResource(picture.priceResourceId),
+            Text(text = "$${picture.price}",
                 fontSize = 18.sp,
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier

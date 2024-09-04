@@ -42,7 +42,7 @@ fun BottomNavSection(navController: NavController) {
             .height(56.dp),
         contentAlignment = Alignment.Center
     ) {
-        BottomNav(navController = navController, modifier = Modifier)
+        BottomNav(navController = navController, modifier = Modifier,)
     }
 }
 
