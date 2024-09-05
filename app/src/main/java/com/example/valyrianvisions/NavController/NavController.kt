@@ -46,7 +46,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             ProductsScreen(navController)
         }
         composable("paintings"){
-            PaintingsScreen()
+            PaintingsScreen(navController)
         }
         composable("sketches"){
             SketchesScreen()

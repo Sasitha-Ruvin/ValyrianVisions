@@ -106,6 +106,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
                     FeaturedProductList(pictureList = DataSource().loadPictures(), navController = navController)
                     Spacer(modifier = Modifier.height(25.dp))
                     CategoriesText()
+                    Spacer(modifier = Modifier.height(20.dp))
                     CategoryButtons(navController = navController)
                     Spacer(modifier = Modifier.height(25.dp))
                     ImageWithOverlay()
@@ -391,14 +392,13 @@ fun CategoryButtons(navController: NavController) {
             .fillMaxWidth()
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp) // Spacing between buttons
+        horizontalArrangement = Arrangement.SpaceBetween // Spacing between buttons
     ) {
         items(listOf("Paintings", "Sketches", "Sculptures")) { category ->
             Button(
                 onClick = { navController.navigate(category.lowercase()) }, // Navigate to category-specific screens
                 modifier = Modifier
-                    .height(40.dp)
-                    .padding(4.dp),
+                    .height(40.dp),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
                 Text(text = category)

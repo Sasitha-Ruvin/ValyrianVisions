@@ -3,6 +3,7 @@ package com.example.valyrianvisions.data
 import androidx.compose.ui.res.stringResource
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.model.Artists
+import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
 
 class DataSource {
@@ -34,6 +35,17 @@ class ArtistSource{
     }
 }
 
-class Categories{
+class PaintingsSource{
+    fun loadPaintings():List<Paintings>{
+        return listOf<Paintings>(
+            Paintings(R.drawable.product1,R.string.painting_1,R.string.painting_1_description,20.25),
+            Paintings(R.drawable.product2,R.string.painting_2,R.string.painting_2_description,15.25),
+            Paintings(R.drawable.product3,R.string.painting_3,R.string.painting_3_description,15.35),
+            Paintings(R.drawable.product4,R.string.painting_4,R.string.painting_4_description,20.25),
+            Paintings(R.drawable.product5,R.string.painting_5,R.string.painting_5_description,20.99),
+            Paintings(R.drawable.product6,R.string.painting_6,R.string.painting_6_description,21.95),
 
+        )
+    }
 }
+
