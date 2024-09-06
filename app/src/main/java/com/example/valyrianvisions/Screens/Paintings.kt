@@ -1,7 +1,13 @@
 package com.example.valyrianvisions.Screens
 
+import CartViewModel
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,40 +23,50 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
+import kotlinx.coroutines.delay
 
 @Composable
-fun PaintingsScreen(navController: NavController){
+fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel) {
     val paintings = PaintingsSource().loadPaintings()
     var search by remember { mutableStateOf("") }
     var startAnimation by remember { mutableStateOf(false) }
-    val pictures = DataSource().loadPictures()
+    var isLoading by remember { mutableStateOf(true) }
+
     LaunchedEffect(Unit) {
         startAnimation = true
     }
 
-    val offsetX by animateDpAsState(
-        targetValue = if (startAnimation) 0.dp else 3000.dp,
-        animationSpec = tween(durationMillis = 600)
-    )
-
-    ScreenWithTopBarAndBottomNav(navController = navController)
+    LaunchedEffect(Unit)
     {
-        Column (modifier = Modifier
-            .fillMaxSize()
-            .padding(2.dp)
-            .offset(x = offsetX)){
-            SearchBars(search = search, onSearchChange = { search = it })
-            Spacer(modifier = Modifier.height(12.dp))
-            ProductsGrid(products = paintings)
-
-
-
-        }
+        delay(1500)
+        isLoading = false
 
     }
 
+    if(isLoading){
+        LoadingCircle()
+    }else{
+        ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {
+            AnimatedVisibility(
+                visible = startAnimation,
+                enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
+                exit = slideOutHorizontally(targetOffsetX = { it }) + fadeOut()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(2.dp)
+                ) {
+                    SearchBar(search = search, onSearchChange = { search = it })
+                    Spacer(modifier = Modifier.height(12.dp))
+                    ProductsGrid(products = paintings)
+                }
+            }
+        }
+    }
 }

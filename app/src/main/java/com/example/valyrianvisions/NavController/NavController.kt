@@ -34,19 +34,19 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
 
         }
         composable("home"){
-            HomeScreen(modifier, navController, authViewModel)
+            HomeScreen(modifier, navController, authViewModel, cartViewModel)
         }
         composable("cart"){
             CartScreen(navController,cartViewModel )
         }
         composable("profile"){
-            UserProfile(navController, authViewModel)
+            UserProfile(navController, authViewModel, cartViewModel)
         }
         composable("products"){
-            ProductsScreen(navController)
+            ProductsScreen(navController, cartViewModel)
         }
         composable("paintings"){
-            PaintingsScreen(navController)
+            PaintingsScreen(navController,cartViewModel)
         }
         composable("sketches"){
             SketchesScreen()

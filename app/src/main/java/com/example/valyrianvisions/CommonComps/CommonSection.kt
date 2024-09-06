@@ -1,5 +1,6 @@
 package com.example.valyrianvisions.CommonComps
 
+import CartViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -15,11 +16,12 @@ import com.example.valyrianvisions.TopBar.TopBar
 @Composable
 fun ScreenWithTopBarAndBottomNav(
     navController: NavController,
+    cartViewModel: CartViewModel,
     content: @Composable (Modifier) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Bar
-        TopBarSection(navController = navController)
+        TopBarSection(navController = navController, cartViewModel)
 
         // Main Content
         Box(modifier = Modifier.weight(1f).background(MaterialTheme.colorScheme.background)) {
@@ -48,7 +50,7 @@ fun BottomNavSection(navController: NavController) {
 
 
 @Composable
-fun TopBarSection(navController: NavController) {
+fun TopBarSection(navController: NavController, cartViewModel: CartViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,6 +58,6 @@ fun TopBarSection(navController: NavController) {
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
-        TopBar(navController = navController)
+        TopBar(navController = navController, cartViewModel )
     }
 }

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.valyrianvisions.ProductItem
 
 @Composable
-fun ProductCards(product: ProductItem){
+fun ProductCards(isLoading: Boolean = false, product: ProductItem){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,6 +34,7 @@ fun ProductCards(product: ProductItem){
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(8.dp)

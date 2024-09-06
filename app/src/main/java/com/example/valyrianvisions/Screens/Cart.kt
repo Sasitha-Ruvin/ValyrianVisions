@@ -40,7 +40,7 @@ fun CartScreen(
     val formattedSubTotal = decimalFormat.format(subTotal)
     val formattedShipping = decimalFormat.format(cartViewModel.shippingCost)
 
-    ScreenWithTopBarAndBottomNav(navController = navController) {
+    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -1,6 +1,7 @@
 package com.example.valyrianvisions.Screens
 
 import CartViewModel
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -41,6 +43,7 @@ fun DetailedProductView(
     LaunchedEffect(Unit) {
         startAnimation = true
     }
+    val context = LocalContext.current
 
     val offsetX by animateDpAsState(
         targetValue = if (startAnimation) 0.dp else 3000.dp,
@@ -51,7 +54,7 @@ fun DetailedProductView(
     val name = stringResource(id = picture.stringResourceId)
     val price = picture.price
 
-    ScreenWithTopBarAndBottomNav(navController = navController) { innerPadding ->
+    ScreenWithTopBarAndBottomNav(navController = navController,cartViewModel) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -169,7 +172,7 @@ fun DetailedProductView(
                         Text(text = "+", fontSize = 24.sp)
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
 
                     Button(
                         onClick = {
@@ -179,11 +182,12 @@ fun DetailedProductView(
                                 price = price,
                                 quantity = quantity
                             )
+                            Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
                             cartViewModel.addItemToCart(cartItem)
                         },
                         modifier = Modifier
                             .weight(1f)
-                            .padding(horizontal = 32.dp)
+                            .padding(horizontal = 25.dp)
                     ) {
                         Text(text = "Add to Cart", style = MaterialTheme.typography.labelSmall)
                     }

@@ -1,5 +1,6 @@
 package com.example.valyrianvisions.Screens
 
+import CartViewModel
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -16,18 +17,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -48,12 +57,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.CommonComps.SectionsText
+import com.example.valyrianvisions.ProductItem
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.data.DataSource
+import com.example.valyrianvisions.data.PaintingsSource
+import com.example.valyrianvisions.data.SketchSource
+import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
+import com.example.valyrianvisions.model.Sketch
 
 @Composable
-fun ProductsScreen(navController:NavController){
+fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
     var search by remember { mutableStateOf("") }
     var startAnimation by remember { mutableStateOf(false) }
     val pictures = DataSource().loadPictures()
@@ -65,21 +80,133 @@ fun ProductsScreen(navController:NavController){
         targetValue = if (startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 600)
     )
-    ScreenWithTopBarAndBottomNav(navController = navController) {
+    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(2.dp)
-            .offset(x = offsetX)) {
-            SearchBars(search = search, onSearchChange = { search = it })
+            .offset(x = offsetX)
+            .verticalScroll(rememberScrollState())
+            ) {
+            ProductMainText()
             Spacer(modifier = Modifier.height(12.dp))
-            CategoriesButtons(navController = navController)
+            Spacer(modifier = Modifier.height(12.dp))
+            SearchBar(search = search, onSearchChange = { search = it })
+            Spacer(modifier = Modifier.height(12.dp))
+            TrendingText()
+            Spacer(modifier = Modifier.height(12.dp))
+            TrendingProductList(pictureList = DataSource().loadPictures(), navController = navController)
             Spacer(modifier = Modifier.height(20.dp))
-            ProductGrid(pictures)
+            SectionsText(title = "Paintings", navigateTo = "paintings", navController = navController)
+            Spacer(modifier = Modifier.height(20.dp))
+            PaintingsList(paintingsList = PaintingsSource().loadPaintings(), navController = navController)
+            Spacer(modifier = Modifier.height(20.dp))
+            SectionsText(title = "Sketches", navigateTo = "sketches", navController = navController )
+            Spacer(modifier = Modifier.height(20.dp))
+            SketchesList(sketchesList = SketchSource().loadKSketches(), navController = navController)
+
             }
+
 
         }
 
     }
+
+
+@Composable
+fun ProductMainText(){
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)
+        .padding(10.dp),
+        horizontalAlignment = Alignment.Start) 
+    {
+        Text(text = "Find Your Favourite Artworks and Artists",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Light)
+        
+    }
+}
+
+@Composable
+fun SectionText(navController: NavController){
+    Row( modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically)
+    {
+        Text(text = "Paintings",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        TextButton(onClick = { navController.navigate("paintings")},
+            modifier = Modifier.align(Alignment.CenterVertically))
+        {
+            Text(
+                text = "Show more",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Bold
+                ),
+                fontSize = 15.sp
+            )
+
+        }
+    }
+}
+
+
+@Composable
+fun TrendingText(){
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)
+        .padding(10.dp),
+        horizontalAlignment = Alignment.Start)
+    {
+        Text(text = "Trending",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold)
+
+    }
+}
+
+//Featured Product Card
+@Composable
+fun TrendingProductCard(picture:Pictures, modifier: Modifier = Modifier,navController: NavController){
+    Card(modifier = Modifier
+        .padding(horizontal = 12.dp)
+        .width(100.dp)
+        .height(80.dp)
+        .clickable { navController.navigate("detailedProductView/${picture.imageResourceId}") }
+        ) {
+        Column {
+            Image(painter = painterResource(picture.imageResourceId), contentDescription = stringResource(
+                R.string.product_image
+            ),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(130.dp)
+                    .width(200.dp)
+            )
+            Text(text = stringResource(id = picture.stringResourceId),
+                fontSize = 18.sp,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+        }
+    }
+}
+@Composable
+fun TrendingProductList(pictureList: List<Pictures>, navController: NavController) {
+    LazyRow(modifier = Modifier) {
+        items(pictureList) { picture ->
+            TrendingProductCard(picture = picture, modifier = Modifier.padding(10.dp), navController = navController)
+        }
+    }
+}
 
 @Composable
 fun CategoriesButtons(navController: NavController) {
@@ -109,117 +236,161 @@ fun CategoriesButtons(navController: NavController) {
 }
 
 @Composable
-fun SearchBars(search: String, onSearchChange: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(60.dp))
-            .clip(RoundedCornerShape(60.dp))
-            .height(56.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        TextField(
-            value = search,
-            onValueChange = onSearchChange,
-            placeholder = { Text("Search") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
-            ),
-            singleLine = true,
-            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
-        )
-    }
-}
-
-@Composable
-fun ProductGrid(pictures: List<Pictures>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(pictures.size) { index ->
-            ProductCard(picture = pictures[index])
-        }
-    }
-}
-@Composable
-fun ProductCard(picture: Pictures) {
+fun SketchesCard(sketch: Sketch, modifier: Modifier = Modifier, navController: NavController)
+{
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { }
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        modifier = modifier
+            .padding(horizontal = 12.dp)
+            .width(200.dp)
+
+            .clickable { navController.navigate("detailedProductView/${sketch.imageResourceId}") }
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(8.dp)
-        ) {
+        Column {
             Image(
-                painter = painterResource(id = picture.imageResourceId),
-                contentDescription = stringResource(id = picture.stringResourceId),
+                painter = painterResource(sketch.imageResourceId),
+                contentDescription = stringResource(sketch.descriptionResourceId),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
+                    .height(130.dp)
+                    .width(220.dp)
+            )
+            Text(
+                text = stringResource(id = sketch.stringResourceId),
+                fontSize = 18.sp,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)
+                    .padding(10.dp)
             )
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(id = picture.stringResourceId),
-                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
-                color = Color.Black
+                text = "${sketch.price}$",
+                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "${picture.price}$",
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-            ) {
-                Text(text = "Buy", color = Color.White)
-            }
         }
     }
-}
-//Main Image Overlay
-@Composable
-fun MainImage() {
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // Background Image
-        Image(
-            painter = painterResource(R.drawable.art1),
-            contentDescription = "Art One",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
-            contentScale = ContentScale.Crop
-        )
 
-        // Overlaying Text
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.Center)
-        ) {
+}
+@Composable
+fun PaintingsCard(painting: Paintings, modifier: Modifier = Modifier, navController: NavController) {
+    Card(
+        modifier = modifier
+            .padding(horizontal = 12.dp)
+            .width(200.dp)
+
+            .clickable { navController.navigate("detailedProductView/${painting.imageResourceId}") }
+    ) {
+        Column {
+            Image(
+                painter = painterResource(painting.imageResourceId),
+                contentDescription = stringResource(painting.descriptionResourceId),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(130.dp)
+                    .width(220.dp)
+            )
             Text(
-                text = stringResource(R.string.immerse_in_art),
-                style = MaterialTheme.typography.headlineMedium.copy(color = Color.White, fontWeight = FontWeight.Bold)
+                text = stringResource(id = painting.stringResourceId),
+                fontSize = 18.sp,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            )
+            Text(
+                text = "${painting.price}$",
+                fontSize = 16.sp,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
             )
         }
     }
 }
+
+@Composable
+fun SketchesList(sketchesList: List<Sketch>, navController: NavController){
+    val limitedSketchesList = sketchesList.take(5)
+    LazyRow(modifier = Modifier.fillMaxWidth()) {
+        items(limitedSketchesList){ sketch->
+            SketchesCard(sketch = sketch, navController = navController, modifier = Modifier.padding(10.dp))
+        }
+
+    }
+}
+@Composable
+fun PaintingsList(paintingsList: List<Paintings>, navController: NavController) {
+
+    val limitedPaintingsList = paintingsList.take(5)
+
+    LazyRow(modifier = Modifier.fillMaxWidth()) {
+        items(limitedPaintingsList) { painting ->
+            PaintingsCard(painting = painting, modifier = Modifier.padding(10.dp), navController = navController)
+        }
+    }
+}
+
+
+
+//@Composable
+//fun ProductGrid(pictures: List<Pictures>) {
+//    LazyVerticalGrid(
+//        columns = GridCells.Fixed(2),
+//        modifier = Modifier.fillMaxSize(),
+//        contentPadding = PaddingValues(8.dp),
+//        verticalArrangement = Arrangement.spacedBy(8.dp),
+//        horizontalArrangement = Arrangement.spacedBy(8.dp)
+//    ) {
+//        items(pictures.size) { index ->
+//            ProductCard(picture = pictures[index])
+//        }
+//    }
+//}
+//@Composable
+//fun ProductCard(picture: Pictures) {
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .clickable { }
+//            .padding(8.dp),
+//        colors = CardDefaults.cardColors(containerColor = Color.White),
+//        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+//    ) {
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            modifier = Modifier.padding(8.dp)
+//        ) {
+//            Image(
+//                painter = painterResource(id = picture.imageResourceId),
+//                contentDescription = stringResource(id = picture.stringResourceId),
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(120.dp)
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//            Text(
+//                text = stringResource(id = picture.stringResourceId),
+//                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
+//                color = Color.Black
+//            )
+//            Spacer(modifier = Modifier.height(4.dp))
+//            Text(
+//                text = "${picture.price}$",
+//                style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
+//                color = Color.Black
+//            )
+//            Spacer(modifier = Modifier.height(4.dp))
+//            Button(
+//                onClick = {},
+//                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+//            ) {
+//                Text(text = "Buy", color = Color.White)
+//            }
+//        }
+//    }
+//}

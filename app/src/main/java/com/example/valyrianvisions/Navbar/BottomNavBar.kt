@@ -55,10 +55,9 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             contentDescription = "Home",
             modifier = Modifier
                 .clickable {
-                    navController.navigate("home") {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                    navController.popBackStack(navController.graph.startDestinationId, false)
+                    if (currentDestination != "home") {
+                        navController.navigate("home")
                     }
                 }
                 .size(24.dp)
@@ -72,10 +71,9 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             contentDescription = "Explore",
             modifier = Modifier
                 .clickable {
-                    navController.navigate("products") {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                    navController.popBackStack(navController.graph.startDestinationId, false)
+                    if (currentDestination != "products") {
+                        navController.navigate("products")
                     }
                 }
                 .size(24.dp)
@@ -85,14 +83,13 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
 
         // Saved Icon
         Icon(
-            imageVector = if (currentDestination == "saved") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
+            imageVector = if (currentDestination == "wishlist") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
             contentDescription = "Saved",
             modifier = Modifier
                 .clickable {
-                    navController.navigate("saved") {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                    navController.popBackStack(navController.graph.startDestinationId, false)
+                    if (currentDestination != "wishlist") {
+                        navController.navigate("wishlist")
                     }
                 }
                 .size(24.dp)
@@ -106,10 +103,9 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             contentDescription = "Profile",
             modifier = Modifier
                 .clickable {
-                    navController.navigate("profile") {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                    navController.popBackStack(navController.graph.startDestinationId, false)
+                    if (currentDestination != "profile") {
+                        navController.navigate("profile")
                     }
                 }
                 .size(24.dp)

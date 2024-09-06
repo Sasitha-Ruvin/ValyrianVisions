@@ -5,6 +5,7 @@ import com.example.valyrianvisions.R
 import com.example.valyrianvisions.model.Artists
 import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
+import com.example.valyrianvisions.model.Sketch
 
 class DataSource {
 
@@ -44,6 +45,20 @@ class PaintingsSource{
             Paintings(R.drawable.product4,R.string.painting_4,R.string.painting_4_description,20.25),
             Paintings(R.drawable.product5,R.string.painting_5,R.string.painting_5_description,20.99),
             Paintings(R.drawable.product6,R.string.painting_6,R.string.painting_6_description,21.95),
+
+        )
+    }
+}
+
+class SketchSource{
+    fun loadKSketches():List<Sketch>{
+        return listOf<Sketch>(
+            Sketch(R.drawable.sketch1,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch2,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch3,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch4,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch5,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch6,R.string.sketch_1,R.string.sketch_1_desc,16.99)
 
         )
     }

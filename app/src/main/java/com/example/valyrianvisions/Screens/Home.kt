@@ -1,5 +1,6 @@
 package com.example.valyrianvisions.Screens
 
+import CartViewModel
 import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateDpAsState
@@ -57,7 +58,7 @@ import kotlinx.coroutines.delay
 
 //Home Screen
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel) {
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel, cartViewModel: CartViewModel) {
     var search by remember { mutableStateOf("") }
     val authState = authViewModel.authstate.observeAsState()
     var startAnimation by remember{ mutableStateOf(false) }
@@ -78,7 +79,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
             else -> Unit
         }
     }
-    ScreenWithTopBarAndBottomNav(navController = navController) { innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) { innerPadding->
         Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -101,7 +102,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
                     Spacer(modifier = Modifier.height(15.dp))
                     Slideshow()
                     Spacer(modifier = Modifier.height(16.dp))
-                    FeaturedText()
+                    FeaturedText(navController)
                     Spacer(modifier = Modifier.height(10.dp))
                     FeaturedProductList(pictureList = DataSource().loadPictures(), navController = navController)
                     Spacer(modifier = Modifier.height(25.dp))
@@ -186,7 +187,7 @@ fun ImageWithOverlay() {
 
 //Featured Product section Text
 @Composable
-fun FeaturedText() {
+fun FeaturedText(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -203,7 +204,7 @@ fun FeaturedText() {
         )
         Spacer(modifier = Modifier.weight(1f))
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate("products") },
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Text(
@@ -252,7 +253,7 @@ fun FeaturedProductCard(picture:Pictures, modifier: Modifier = Modifier,navContr
                     .fillMaxWidth()
                     .padding(10.dp)
                 )
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { navController.navigate("detailedProductView/${picture.imageResourceId}") },
                 modifier = Modifier.padding(8.dp)
             ) {
                 Text(text = "Buy")
@@ -266,7 +267,7 @@ fun FeaturedProductCard(picture:Pictures, modifier: Modifier = Modifier,navContr
 
 //Featured Products List
 @Composable
-fun FeaturedProductList(pictureList: List<Pictures>, navController: NavController, modifier: Modifier = Modifier) {
+fun FeaturedProductList(pictureList: List<Pictures>, navController: NavController) {
     LazyRow(modifier = Modifier) {
         items(pictureList) { picture ->
             FeaturedProductCard(picture = picture, modifier = Modifier.padding(10.dp), navController = navController)
@@ -278,9 +279,8 @@ fun FeaturedProductList(pictureList: List<Pictures>, navController: NavControlle
 
 //Slideshow Composable
 @Composable
-fun Slideshow(modifier: Modifier = Modifier, slideInterval: Long = 5000) {
+fun Slideshow(slideInterval: Long = 5000) {
     val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
     val imageHeight = if (isPortrait) 200.dp else 350.dp
 
@@ -356,7 +356,7 @@ fun FeaturedArtistCard(artists: Artists, modifier: Modifier = Modifier){
 
 
 @Composable
-fun FeaturedArtistList(artistList: List<Artists>, modifier: Modifier = Modifier){
+fun FeaturedArtistList(artistList: List<Artists>){
     LazyRow(modifier = Modifier){
         items(artistList){artist->
             FeaturedArtistCard(artists = artist, modifier = Modifier.padding((10.dp)))
@@ -398,7 +398,7 @@ fun CategoryButtons(navController: NavController) {
             Button(
                 onClick = { navController.navigate(category.lowercase()) }, // Navigate to category-specific screens
                 modifier = Modifier
-                    .height(40.dp),
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
                 Text(text = category)

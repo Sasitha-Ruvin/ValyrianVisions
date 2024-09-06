@@ -1,5 +1,6 @@
 package com.example.valyrianvisions.Screens
 
+import CartViewModel
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -43,7 +44,7 @@ import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 
 @Composable
-fun UserProfile(navController:NavController,authViewModel: AuthViewModel){
+fun UserProfile(navController:NavController,authViewModel: AuthViewModel,cartViewModel: CartViewModel){
     val authState by authViewModel.authstate.observeAsState()
     LaunchedEffect(authState) {
         if(authState is AuthState.Unauthenticated){
@@ -64,7 +65,7 @@ fun UserProfile(navController:NavController,authViewModel: AuthViewModel){
         targetValue = if(startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 400)
     )
-    ScreenWithTopBarAndBottomNav(navController = navController) {innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {innerPadding->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(2.dp)
