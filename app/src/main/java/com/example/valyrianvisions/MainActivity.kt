@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.SavedStateHandle
 import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.NavController.AppNavigation
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
         Thread.sleep(2000)
         installSplashScreen()
         enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         val authViewModel : AuthViewModel by viewModels()
 
         val cartViewModel : CartViewModel by viewModels()

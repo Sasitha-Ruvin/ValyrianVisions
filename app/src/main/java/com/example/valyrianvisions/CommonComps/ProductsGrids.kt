@@ -9,10 +9,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.valyrianvisions.ProductItem
 
 @Composable
-fun ProductsGrid(products: List<ProductItem>){
+fun ProductsGrid(products: List<ProductItem>, productType:String, navController: NavController){
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
@@ -21,7 +22,7 @@ fun ProductsGrid(products: List<ProductItem>){
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(products.size) { index ->
-            ProductCards(product = products[index])
+            ProductCards(product = products[index], productType = productType, navController = navController)
         }
     }
 }

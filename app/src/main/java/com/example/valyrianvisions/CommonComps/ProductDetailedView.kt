@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
@@ -54,7 +55,7 @@ fun DetailedProductView(
     val name = stringResource(id = picture.stringResourceId)
     val price = picture.price
 
-    ScreenWithTopBarAndBottomNav(navController = navController,cartViewModel) { innerPadding ->
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true,cartViewModel) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,9 +63,6 @@ fun DetailedProductView(
                 .background(MaterialTheme.colorScheme.onPrimary)
                 .verticalScroll(rememberScrollState())
         ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-            }
             Spacer(modifier = Modifier.height(35.dp))
             Column(
                 modifier = Modifier
@@ -99,7 +97,7 @@ fun DetailedProductView(
                     )
 
                     TextButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Wishlist")
+                        Icon(imageVector = Icons.Outlined.Bookmark, contentDescription = "Wishlist")
                     }
                 }
 

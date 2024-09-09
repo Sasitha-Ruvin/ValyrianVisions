@@ -8,24 +8,37 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.CommonComps.SearchBar
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
 import kotlinx.coroutines.delay
@@ -51,7 +64,7 @@ fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel) 
     if(isLoading){
         LoadingCircle()
     }else{
-        ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel) {
             AnimatedVisibility(
                 visible = startAnimation,
                 enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
@@ -61,10 +74,19 @@ fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel) 
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(2.dp)
+
+
                 ) {
-                    SearchBar(search = search, onSearchChange = { search = it })
+                    Row(modifier = Modifier.fillMaxWidth() .padding(start = 16.dp),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.Start) {
+                        Text(text = "Paintings",
+                            style = MaterialTheme.typography.titleLarge)
+                    }
                     Spacer(modifier = Modifier.height(12.dp))
-                    ProductsGrid(products = paintings)
+                    SearchBar(search = search, onSearchChange = { search = it }, modifier = Modifier)
+                    Spacer(modifier = Modifier.height(12.dp))
+                    ProductsGrid(products = paintings, productType = "paintings", navController)
                 }
             }
         }

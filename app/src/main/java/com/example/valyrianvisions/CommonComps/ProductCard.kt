@@ -22,14 +22,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.valyrianvisions.ProductItem
 
 @Composable
-fun ProductCards(isLoading: Boolean = false, product: ProductItem){
+fun ProductCards(isLoading: Boolean = false, product: ProductItem, productType:String, navController: NavController){
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable {
+                navController.navigate("detailed_view/${product.imageResourceId}/$productType")
+
+            }
             .padding(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)

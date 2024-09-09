@@ -56,7 +56,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.CommonComps.SearchBar
 import com.example.valyrianvisions.CommonComps.SectionsText
 import com.example.valyrianvisions.ProductItem
 import com.example.valyrianvisions.R
@@ -66,12 +68,14 @@ import com.example.valyrianvisions.data.SketchSource
 import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
 import com.example.valyrianvisions.model.Sketch
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
     var search by remember { mutableStateOf("") }
     var startAnimation by remember { mutableStateOf(false) }
     val pictures = DataSource().loadPictures()
+    var isLoading by remember { mutableStateOf(true) }
     LaunchedEffect(Unit) {
         startAnimation = true
     }
@@ -80,29 +84,38 @@ fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
         targetValue = if (startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 600)
     )
-    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(2.dp)
-            .offset(x = offsetX)
-            .verticalScroll(rememberScrollState())
+    LaunchedEffect(Unit)
+    {
+        delay(1500)
+        isLoading = false
+
+    }
+    if(isLoading){
+        LoadingCircle()
+    }else{
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false,cartViewModel) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(2.dp)
+                .offset(x = offsetX)
+                .verticalScroll(rememberScrollState())
             ) {
-            ProductMainText()
-            Spacer(modifier = Modifier.height(12.dp))
-            Spacer(modifier = Modifier.height(12.dp))
-            SearchBar(search = search, onSearchChange = { search = it })
-            Spacer(modifier = Modifier.height(12.dp))
-            TrendingText()
-            Spacer(modifier = Modifier.height(12.dp))
-            TrendingProductList(pictureList = DataSource().loadPictures(), navController = navController)
-            Spacer(modifier = Modifier.height(20.dp))
-            SectionsText(title = "Paintings", navigateTo = "paintings", navController = navController)
-            Spacer(modifier = Modifier.height(20.dp))
-            PaintingsList(paintingsList = PaintingsSource().loadPaintings(), navController = navController)
-            Spacer(modifier = Modifier.height(20.dp))
-            SectionsText(title = "Sketches", navigateTo = "sketches", navController = navController )
-            Spacer(modifier = Modifier.height(20.dp))
-            SketchesList(sketchesList = SketchSource().loadKSketches(), navController = navController)
+                ProductMainText()
+                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(12.dp))
+                SearchBar(search = search, onSearchChange = { search = it }, modifier = Modifier)
+                Spacer(modifier = Modifier.height(12.dp))
+                TrendingText()
+                Spacer(modifier = Modifier.height(12.dp))
+                TrendingProductList(pictureList = DataSource().loadPictures(), navController = navController)
+                Spacer(modifier = Modifier.height(20.dp))
+                SectionsText(title = "Paintings", navigateTo = "paintings", navController = navController)
+                Spacer(modifier = Modifier.height(20.dp))
+                PaintingsList(paintingsList = PaintingsSource().loadPaintings(), navController = navController)
+                Spacer(modifier = Modifier.height(20.dp))
+                SectionsText(title = "Sketches", navigateTo = "sketches", navController = navController )
+                Spacer(modifier = Modifier.height(20.dp))
+                SketchesList(sketchesList = SketchSource().loadKSketches(), navController = navController)
 
             }
 
@@ -110,6 +123,10 @@ fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
         }
 
     }
+}
+
+
+
 
 
 @Composable

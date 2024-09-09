@@ -16,12 +16,13 @@ import com.example.valyrianvisions.TopBar.TopBar
 @Composable
 fun ScreenWithTopBarAndBottomNav(
     navController: NavController,
+    showbackButton:Boolean = false,
     cartViewModel: CartViewModel,
     content: @Composable (Modifier) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Bar
-        TopBarSection(navController = navController, cartViewModel)
+        TopBarSection(navController = navController, cartViewModel, showbackButton)
 
         // Main Content
         Box(modifier = Modifier.weight(1f).background(MaterialTheme.colorScheme.background)) {
@@ -50,7 +51,7 @@ fun BottomNavSection(navController: NavController) {
 
 
 @Composable
-fun TopBarSection(navController: NavController, cartViewModel: CartViewModel) {
+fun TopBarSection(navController: NavController, cartViewModel: CartViewModel, showbackButton: Boolean) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,6 +59,6 @@ fun TopBarSection(navController: NavController, cartViewModel: CartViewModel) {
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
-        TopBar(navController = navController, cartViewModel )
+        TopBar(navController = navController, cartViewModel, showbackButton = showbackButton)
     }
 }

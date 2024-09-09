@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,11 +14,13 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,33 +39,42 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar(navController: NavController, cartViewModel: CartViewModel, modifier: Modifier = Modifier) {
+fun TopBar(navController: NavController, cartViewModel: CartViewModel, showbackButton:Boolean, modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
+
     val cartItemsCount by remember { derivedStateOf { cartViewModel.cartItems.size } }
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
-            .padding(horizontal = 14.dp, vertical = 8.dp),
+            .padding(horizontal = 10.dp, vertical = 1.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.Start
     ) {
-        Icon(
-            imageVector = Icons.Outlined.Settings,
-            contentDescription = "Menu",
-            modifier = Modifier
-                .clickable { scope.launch { /* Handle menu click */ } }
-                .size(25.dp)
-        )
+        if (showbackButton) {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.weight(1f))
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
         Box(modifier = Modifier.size(24.dp)){
             Icon(
                 imageVector = Icons.Outlined.ShoppingCart,
                 contentDescription = "Cart",
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .clickable { navController.navigate("cart") }
                     .size(25.dp)
+                    .align(Alignment.TopEnd)
             )
             if(cartItemsCount > 0){
                 Box(

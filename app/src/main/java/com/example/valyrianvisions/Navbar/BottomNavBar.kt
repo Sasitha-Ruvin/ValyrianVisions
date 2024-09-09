@@ -13,13 +13,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Store
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Store
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +71,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
 
         // Explore Icon
         Icon(
-            imageVector = if (currentDestination == "products") Icons.Filled.LocationOn else Icons.Outlined.LocationOn,
+            imageVector = if (currentDestination == "products") Icons.Filled.Store else Icons.Outlined.Store,
             contentDescription = "Explore",
             modifier = Modifier
                 .clickable {
@@ -83,13 +87,14 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
 
         // Saved Icon
         Icon(
-            imageVector = if (currentDestination == "wishlist") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
+            imageVector = if (currentDestination == "save") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
             contentDescription = "Saved",
             modifier = Modifier
                 .clickable {
-                    navController.popBackStack(navController.graph.startDestinationId, false)
-                    if (currentDestination != "wishlist") {
-                        navController.navigate("wishlist")
+                    if (currentDestination != "save") {
+                        navController.navigate("save") {
+                            popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                        }
                     }
                 }
                 .size(24.dp)

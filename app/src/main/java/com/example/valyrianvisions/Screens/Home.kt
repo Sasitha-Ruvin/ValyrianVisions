@@ -47,11 +47,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.Authentications.AuthState
 import com.example.valyrianvisions.Authentications.AuthViewModel
+import com.example.valyrianvisions.CommonComps.EventCard
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.CommonComps.SearchBar
+import com.example.valyrianvisions.CommonComps.SwipeableEventSlideshow
 import com.example.valyrianvisions.data.ArtistSource
 import com.example.valyrianvisions.data.DataSource
+import com.example.valyrianvisions.data.EventResource
 import com.example.valyrianvisions.model.Artists
+import com.example.valyrianvisions.model.Events
 import com.example.valyrianvisions.model.Pictures
 import kotlinx.coroutines.delay
 
@@ -62,6 +67,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
     var search by remember { mutableStateOf("") }
     val authState = authViewModel.authstate.observeAsState()
     var startAnimation by remember{ mutableStateOf(false) }
+    val events = EventResource().loadEvents()
 
 
     LaunchedEffect(Unit) {
@@ -79,7 +85,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
             else -> Unit
         }
     }
-    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) { innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController,showbackButton = false, cartViewModel) { innerPadding->
         Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -98,7 +104,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
                 ) {
-                    SearchBar(search = search, onSearchChange = { search = it })
+                    SearchBar(search = search, onSearchChange = { search = it }, modifier = Modifier)
                     Spacer(modifier = Modifier.height(15.dp))
                     Slideshow()
                     Spacer(modifier = Modifier.height(16.dp))
@@ -111,48 +117,19 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
                     CategoryButtons(navController = navController)
                     Spacer(modifier = Modifier.height(25.dp))
                     ImageWithOverlay()
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(15.dp))
                     FeaturedArtistText()
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                     FeaturedArtistList(artistList = ArtistSource().loadArtists())
+                    Spacer(modifier = Modifier.height(15.dp))
+                    NewsText()
+                    Spacer(modifier = Modifier.height(10.dp))
+                    SwipeableEventSlideshow(eventList = events)
                 }
             }
         }
 
-
 }
-
-
-}
-
-
-//Search Bar
-@Composable
-fun SearchBar(search: String, onSearchChange: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(60.dp))
-            .clip(RoundedCornerShape(60.dp))
-            .height(56.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        TextField(
-            value = search,
-            onValueChange = onSearchChange,
-            placeholder = { Text("Search") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
-            ),
-            singleLine = true,
-            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
-        )
-    }
 }
 
 //Main Image Overlay
@@ -406,4 +383,24 @@ fun CategoryButtons(navController: NavController) {
         }
     }
 }
+
+@Composable
+fun NewsText(){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(R.string.new_events),
+            fontSize = 20.sp,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}
+
 

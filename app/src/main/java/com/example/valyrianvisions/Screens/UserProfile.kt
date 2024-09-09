@@ -65,7 +65,7 @@ fun UserProfile(navController:NavController,authViewModel: AuthViewModel,cartVie
         targetValue = if(startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 400)
     )
-    ScreenWithTopBarAndBottomNav(navController = navController, cartViewModel) {innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false, cartViewModel) {innerPadding->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(2.dp)

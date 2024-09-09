@@ -17,10 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SearchBar(search: String, onSearchChange: (String) -> Unit, modifier: Modifier){
+fun SearchBar(search: String, onSearchChange: (String) -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,11 +39,15 @@ fun SearchBar(search: String, onSearchChange: (String) -> Unit, modifier: Modifi
                 .padding(horizontal = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent
+                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedLeadingIconColor = Color.Transparent
             ),
             singleLine = true,
-            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
+            trailingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
+            shape = RoundedCornerShape(60.dp),
+            visualTransformation = VisualTransformation.None
         )
     }
-
 }

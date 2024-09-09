@@ -31,6 +31,7 @@ fun SectionsText(
         Text(
             text = title,
             style = MaterialTheme.typography.bodyMedium,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.weight(1f))

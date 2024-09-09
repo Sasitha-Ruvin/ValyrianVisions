@@ -3,6 +3,7 @@ package com.example.valyrianvisions.data
 import androidx.compose.ui.res.stringResource
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.model.Artists
+import com.example.valyrianvisions.model.Events
 import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
 import com.example.valyrianvisions.model.Sketch
@@ -49,7 +50,14 @@ class PaintingsSource{
         )
     }
 }
-
+class EventResource{
+    fun loadEvents():List<Events>{
+        return listOf<Events>(
+            Events(R.string.event_1,R.string.event_type1, R.string.event_date1, R.drawable.gallery),
+            Events(R.string.event_2,R.string.event_type1,R.string.event_date2,R.drawable.gallery2)
+        )
+    }
+}
 class SketchSource{
     fun loadKSketches():List<Sketch>{
         return listOf<Sketch>(
