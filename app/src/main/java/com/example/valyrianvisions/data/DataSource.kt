@@ -6,6 +6,7 @@ import com.example.valyrianvisions.model.Artists
 import com.example.valyrianvisions.model.Events
 import com.example.valyrianvisions.model.Paintings
 import com.example.valyrianvisions.model.Pictures
+import com.example.valyrianvisions.model.Sculptures
 import com.example.valyrianvisions.model.Sketch
 
 class DataSource {
@@ -61,13 +62,26 @@ class EventResource{
 class SketchSource{
     fun loadKSketches():List<Sketch>{
         return listOf<Sketch>(
-            Sketch(R.drawable.sketch1,R.string.sketch_1,R.string.sketch_1_desc,16.99),
+            Sketch(R.drawable.sketch1,R.string.sketch_3,R.string.sketch3_desc,16.99),
             Sketch(R.drawable.sketch2,R.string.sketch_1,R.string.sketch_1_desc,16.99),
-            Sketch(R.drawable.sketch3,R.string.sketch_1,R.string.sketch_1_desc,16.99),
-            Sketch(R.drawable.sketch4,R.string.sketch_1,R.string.sketch_1_desc,16.99),
-            Sketch(R.drawable.sketch5,R.string.sketch_1,R.string.sketch_1_desc,16.99),
-            Sketch(R.drawable.sketch6,R.string.sketch_1,R.string.sketch_1_desc,16.99)
+            Sketch(R.drawable.sketch3,R.string.sketch_6,R.string.sketch_6_desc,16.99),
+            Sketch(R.drawable.sketch4,R.string.sketch_4,R.string.sketch4_desc,16.99),
+            Sketch(R.drawable.sketch5,R.string.sketch_5,R.string.sketch_5_desc,16.99),
+            Sketch(R.drawable.sketch6,R.string.sketch_2,R.string.sketch2_desc,16.99)
 
+        )
+    }
+}
+
+class SculptureSource{
+    fun loadSculptures():List<Sculptures>{
+        return listOf<Sculptures>(
+            Sculptures(R.drawable.sculpture1,R.string.sculpture1,R.string.sculpture1_desc,265.99),
+            Sculptures(R.drawable.sculpture2,R.string.sculpture2,R.string.sculpture2_desc,360.99),
+            Sculptures(R.drawable.sculpture3,R.string.sculpture3,R.string.sculpture3_desc,360.99),
+            Sculptures(R.drawable.sculpture4,R.string.sculpture4,R.string.sculpture4_desc,360.99),
+            Sculptures(R.drawable.sculpture5,R.string.sculpture5,R.string.sculpture5_desc,360.99),
+            Sculptures(R.drawable.sculpture6,R.string.sculpture6,R.string.sculpture6_desc,360.99)
         )
     }
 }

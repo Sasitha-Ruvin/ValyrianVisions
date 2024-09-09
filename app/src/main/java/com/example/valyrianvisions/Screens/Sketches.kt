@@ -77,7 +77,7 @@ fun SketchesScreen(navController: NavController, cartViewModel: CartViewModel)
                     Spacer(modifier = Modifier.height(12.dp))
                     SearchBar(search = search, onSearchChange = { search = it }, modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
-                    ProductsGrid(products = sketches, productType = "paintings", navController)
+                    ProductsGrid(products = sketches, productType = "sketches", navController)
 
                 }
             }

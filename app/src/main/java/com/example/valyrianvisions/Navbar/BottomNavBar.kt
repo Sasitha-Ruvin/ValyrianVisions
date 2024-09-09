@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocationOn
@@ -101,7 +102,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             }
         ) {
             Icon(
-                imageVector = if (currentDestination == "save") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
+                imageVector = if (currentDestination == "save") Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                 contentDescription = "Saved",
                 modifier = Modifier.size(24.dp)
             )

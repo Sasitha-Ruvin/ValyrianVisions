@@ -225,32 +225,7 @@ fun TrendingProductList(pictureList: List<Pictures>, navController: NavControlle
     }
 }
 
-@Composable
-fun CategoriesButtons(navController: NavController) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Button(
-            onClick = {navController.navigate("paintings")},
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3E1A6B))
-        ) {
-            Text(text = "Paintings")
-        }
-        Button(
-            onClick = {},
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3E1A6B))
-        ) {
-            Text(text = "Sketches")
-        }
-        Button(
-            onClick = {},
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3E1A6B))
-        ) {
-            Text(text = "Sculptures")
-        }
-    }
-}
+
 
 @Composable
 fun SketchesCard(sketch: Sketch, modifier: Modifier = Modifier, navController: NavController)
@@ -260,7 +235,7 @@ fun SketchesCard(sketch: Sketch, modifier: Modifier = Modifier, navController: N
             .padding(horizontal = 12.dp)
             .width(200.dp)
 
-            .clickable { navController.navigate("detailedProductView/${sketch.imageResourceId}") }
+            .clickable { navController.navigate("detailed_view/${sketch.imageResourceId}/sketches") }
     ) {
         Column {
             Image(
@@ -298,7 +273,7 @@ fun PaintingsCard(painting: Paintings, modifier: Modifier = Modifier, navControl
             .padding(horizontal = 12.dp)
             .width(200.dp)
 
-            .clickable { navController.navigate("detailedProductView/${painting.imageResourceId}") }
+            .clickable { navController.navigate("detailed_view/${painting.imageResourceId}/paintings")}
     ) {
         Column {
             Image(

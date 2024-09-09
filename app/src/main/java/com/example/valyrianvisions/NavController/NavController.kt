@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.valyrianvisions.Authentications.AuthViewModel
+import com.example.valyrianvisions.CommonComps.ArtDetailedView
 import com.example.valyrianvisions.CommonComps.ProductView
 import com.example.valyrianvisions.Screens.DetailedProductView
 import com.example.valyrianvisions.Screens.HomeScreen
@@ -23,6 +24,7 @@ import com.example.valyrianvisions.Screens.UserProfile
 import com.example.valyrianvisions.Screens.WishlistScreen
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
+import com.example.valyrianvisions.data.SculptureSource
 import com.example.valyrianvisions.data.SketchSource
 
 @Composable
@@ -56,7 +58,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             SketchesScreen(navController,cartViewModel)
         }
         composable("sculptures"){
-            SculpturesScrren()
+            SculpturesScrren(navController, cartViewModel)
         }
         composable("save"){
             WishlistScreen(navController, cartViewModel)
@@ -86,7 +88,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
 
             val product = when (productType) {
                 "paintings" -> PaintingsSource().loadPaintings().find { it.imageResourceId == productId }
-//                "sculptures" -> .loadSculptures().find { it.imageResourceId == productId }
+                "sculptures" -> SculptureSource().loadSculptures().find { it.imageResourceId == productId }
                 "sketches" -> SketchSource().loadKSketches().find { it.imageResourceId == productId }
                 else -> null
             }
@@ -94,6 +96,27 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             product?.let {
                 ProductView(product = it, navController = navController, cartViewModel)
             }
+        }
+
+//        Route Art detailed view in products screen
+        composable(route = "product_details/{productId}/{productType}",
+            arguments = listOf(
+                navArgument("productId"){type = NavType.IntType},
+                navArgument("productType"){type = NavType.StringType}
+            )
+        ){ backStackEntry ->
+            val productId = backStackEntry.arguments?.getInt("productId")
+            val productType = backStackEntry.arguments?.getString("productType")
+
+            val product = when (productType) {
+                "paintings" -> PaintingsSource().loadPaintings().find { it.imageResourceId == productId }
+                "sketches" -> SketchSource().loadKSketches().find { it.imageResourceId == productId }
+                else -> null
+            }
+            product?.let {
+                ArtDetailedView(product = it, navController = navController, cartViewModel =cartViewModel )
+            }
+
         }
     })
 }
