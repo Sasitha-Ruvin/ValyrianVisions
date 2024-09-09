@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Store
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,66 +55,74 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         // Home Icon
-        Icon(
-            imageVector = if (currentDestination == "home") Icons.Filled.Home else Icons.Outlined.Home,
-            contentDescription = "Home",
-            modifier = Modifier
-                .clickable {
-                    navController.popBackStack(navController.graph.startDestinationId, false)
-                    if (currentDestination != "home") {
-                        navController.navigate("home")
-                    }
+        IconButton(
+            onClick = {
+                navController.popBackStack(navController.graph.startDestinationId, false)
+                if (currentDestination != "home") {
+                    navController.navigate("home")
                 }
-                .size(24.dp)
-        )
+            }
+        ) {
+            Icon(
+                imageVector = if (currentDestination == "home") Icons.Filled.Home else Icons.Outlined.Home,
+                contentDescription = "Home",
+                modifier = Modifier.size(24.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.width(25.dp))
 
         // Explore Icon
-        Icon(
-            imageVector = if (currentDestination == "products") Icons.Filled.Store else Icons.Outlined.Store,
-            contentDescription = "Explore",
-            modifier = Modifier
-                .clickable {
-                    navController.popBackStack(navController.graph.startDestinationId, false)
-                    if (currentDestination != "products") {
-                        navController.navigate("products")
-                    }
+        IconButton(
+            onClick = {
+                navController.popBackStack(navController.graph.startDestinationId, false)
+                if (currentDestination != "products") {
+                    navController.navigate("products")
                 }
-                .size(24.dp)
-        )
+            }
+        ) {
+            Icon(
+                imageVector = if (currentDestination == "products") Icons.Filled.Store else Icons.Outlined.Store,
+                contentDescription = "Explore",
+                modifier = Modifier.size(24.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.width(25.dp))
 
         // Saved Icon
-        Icon(
-            imageVector = if (currentDestination == "save") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
-            contentDescription = "Saved",
-            modifier = Modifier
-                .clickable {
-                    if (currentDestination != "save") {
-                        navController.navigate("save") {
-                            popUpTo(navController.graph.startDestinationId) { inclusive = true }
-                        }
+        IconButton(
+            onClick = {
+                if (currentDestination != "save") {
+                    navController.navigate("save") {
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true }
                     }
                 }
-                .size(24.dp)
-        )
+            }
+        ) {
+            Icon(
+                imageVector = if (currentDestination == "save") Icons.Filled.FavoriteBorder else Icons.Outlined.FavoriteBorder,
+                contentDescription = "Saved",
+                modifier = Modifier.size(24.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.width(25.dp))
 
         // Profile Icon
-        Icon(
-            imageVector = if (currentDestination == "profile") Icons.Filled.AccountCircle else Icons.Outlined.Person,
-            contentDescription = "Profile",
-            modifier = Modifier
-                .clickable {
-                    navController.popBackStack(navController.graph.startDestinationId, false)
-                    if (currentDestination != "profile") {
-                        navController.navigate("profile")
-                    }
+        IconButton(
+            onClick = {
+                navController.popBackStack(navController.graph.startDestinationId, false)
+                if (currentDestination != "profile") {
+                    navController.navigate("profile")
                 }
-                .size(24.dp)
-        )
+            }
+        ) {
+            Icon(
+                imageVector = if (currentDestination == "profile") Icons.Filled.AccountCircle else Icons.Outlined.Person,
+                contentDescription = "Profile",
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 }
