@@ -53,7 +53,6 @@ android {
 
 dependencies {
 
-    implementation("com.google.accompanist:accompanist-placeholder-material:0.30.0")
     implementation("androidx.compose.material:material-icons-extended:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")

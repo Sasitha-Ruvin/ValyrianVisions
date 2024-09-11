@@ -39,12 +39,14 @@ import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.CommonComps.SearchBar
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
+import com.example.valyrianvisions.model.WishlistItem
 import kotlinx.coroutines.delay
 
 @Composable
-fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel) {
+fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel) {
     val paintings = PaintingsSource().loadPaintings()
     var search by remember { mutableStateOf("") }
     var startAnimation by remember { mutableStateOf(false) }
@@ -64,7 +66,7 @@ fun PaintingsScreen(navController: NavController, cartViewModel: CartViewModel) 
     if(isLoading){
         LoadingCircle()
     }else{
-        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel) {
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel, wishListViewModel = wishListViewModel) {
             AnimatedVisibility(
                 visible = startAnimation,
                 enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),

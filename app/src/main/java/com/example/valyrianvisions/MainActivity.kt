@@ -11,6 +11,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.SavedStateHandle
 import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.NavController.AppNavigation
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.ui.theme.ValyrianVisionsTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,9 +24,10 @@ class MainActivity : ComponentActivity() {
         val authViewModel : AuthViewModel by viewModels()
 
         val cartViewModel : CartViewModel by viewModels()
+        val wishListViewModel: WishListViewModel by viewModels()
         setContent {
             ValyrianVisionsTheme {
-                AppNavigation(authViewModel = authViewModel, cartViewModel = cartViewModel)
+                AppNavigation(authViewModel = authViewModel, cartViewModel = cartViewModel, wishListViewModel = wishListViewModel)
             }
         }
     }

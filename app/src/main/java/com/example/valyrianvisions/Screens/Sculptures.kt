@@ -25,11 +25,12 @@ import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.CommonComps.SearchBar
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.SculptureSource
 import kotlinx.coroutines.delay
 
 @Composable
-fun SculpturesScrren(navController: NavController, cartViewModel: CartViewModel)
+fun SculpturesScrren(navController: NavController, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel)
 {
     var sculptures = SculptureSource().loadSculptures()
     var search by remember { mutableStateOf("") }
@@ -50,7 +51,7 @@ fun SculpturesScrren(navController: NavController, cartViewModel: CartViewModel)
     if(isLoading){
         LoadingCircle()
     }else{
-        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel)
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel, wishListViewModel)
         {
             Column(modifier = Modifier
                 .fillMaxSize()

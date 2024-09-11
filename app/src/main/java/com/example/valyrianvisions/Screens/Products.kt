@@ -62,6 +62,7 @@ import com.example.valyrianvisions.CommonComps.SearchBar
 import com.example.valyrianvisions.CommonComps.SectionsText
 import com.example.valyrianvisions.ProductItem
 import com.example.valyrianvisions.R
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
 import com.example.valyrianvisions.data.SketchSource
@@ -71,7 +72,7 @@ import com.example.valyrianvisions.model.Sketch
 import kotlinx.coroutines.delay
 
 @Composable
-fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
+fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel){
     var search by remember { mutableStateOf("") }
     var startAnimation by remember { mutableStateOf(false) }
     val pictures = DataSource().loadPictures()
@@ -93,7 +94,7 @@ fun ProductsScreen(navController:NavController, cartViewModel: CartViewModel){
     if(isLoading){
         LoadingCircle()
     }else{
-        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false,cartViewModel) {
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false,cartViewModel, wishListViewModel) {
             Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(2.dp)

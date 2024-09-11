@@ -67,6 +67,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             Icon(
                 imageVector = if (currentDestination == "home") Icons.Filled.Home else Icons.Outlined.Home,
                 contentDescription = "Home",
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -85,6 +86,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             Icon(
                 imageVector = if (currentDestination == "products") Icons.Filled.Store else Icons.Outlined.Store,
                 contentDescription = "Explore",
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -104,6 +106,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             Icon(
                 imageVector = if (currentDestination == "save") Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                 contentDescription = "Saved",
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -122,6 +125,7 @@ fun BottomNav(navController: NavController, modifier: Modifier = Modifier) {
             Icon(
                 imageVector = if (currentDestination == "profile") Icons.Filled.AccountCircle else Icons.Outlined.Person,
                 contentDescription = "Profile",
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(24.dp)
             )
         }

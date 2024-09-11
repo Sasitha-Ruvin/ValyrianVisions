@@ -28,6 +28,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -53,13 +54,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.ProductItem
 import com.example.valyrianvisions.Screens.format
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.model.CartItem
+import com.example.valyrianvisions.model.WishlistItem
 
 @Composable
 fun ProductView(
     product: ProductItem,
     navController: NavController,
     cartViewModel: CartViewModel,
+    wishListViewModel: WishListViewModel,
     modifier: Modifier = Modifier
 ) {
     var startAnimation by remember { mutableStateOf(false) }
@@ -80,7 +84,7 @@ fun ProductView(
     val price = product.price
     val desc = stringResource(id = product.descriptionResourceId)
 
-    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel) { innerPadding ->
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel, wishListViewModel) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -116,8 +120,14 @@ fun ProductView(
                         style = MaterialTheme.typography.headlineMedium,
                         fontSize = 24.sp
                     )
-                    TextButton(onClick = { /* TODO: Handle favorite click */ }) {
-                        Icon(imageVector = Icons.Outlined.Bookmark, contentDescription = "Favorite Icon")
+                    TextButton(onClick = { val wishlistItem = WishlistItem(
+                        imageRes = product.imageResourceId,
+                        name = name,
+                        price = price)
+                        Toast.makeText(context, "Item added to Wishlist", Toast.LENGTH_SHORT).show()
+                        wishListViewModel.addItemToWish(wishlistItem)
+                    }) {
+                        Icon(imageVector = Icons.Outlined.BookmarkBorder, contentDescription = "Favorite Icon")
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))

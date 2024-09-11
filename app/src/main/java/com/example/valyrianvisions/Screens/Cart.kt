@@ -26,12 +26,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 
 
 @Composable
 fun CartScreen(
     navController: NavController,
-    cartViewModel: CartViewModel = viewModel()
+    cartViewModel: CartViewModel = viewModel(),
+    wishListViewModel: WishListViewModel
 ) {
     val cartItems = cartViewModel.cartItems
     val subTotal = cartViewModel.subTotal
@@ -40,7 +42,7 @@ fun CartScreen(
     val formattedSubTotal = decimalFormat.format(subTotal)
     val formattedShipping = decimalFormat.format(cartViewModel.shippingCost)
 
-    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel) {
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel, wishListViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

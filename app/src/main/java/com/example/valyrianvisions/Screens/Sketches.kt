@@ -30,11 +30,12 @@ import com.example.valyrianvisions.Animations.LoadingCircle
 import com.example.valyrianvisions.CommonComps.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.CommonComps.SearchBar
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.SketchSource
 import kotlinx.coroutines.delay
 
 @Composable
-fun SketchesScreen(navController: NavController, cartViewModel: CartViewModel)
+fun SketchesScreen(navController: NavController, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel)
 {
     var sketches = SketchSource().loadKSketches()
     var search by remember { mutableStateOf("") }
@@ -54,7 +55,7 @@ fun SketchesScreen(navController: NavController, cartViewModel: CartViewModel)
     if(isLoading){
         LoadingCircle()
     }else{
-        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel)
+        ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel = cartViewModel, wishListViewModel)
         {
             AnimatedVisibility(
                 visible = startAnimation,

@@ -52,6 +52,7 @@ import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.CommonComps.SearchBar
 import com.example.valyrianvisions.CommonComps.SwipeableEventSlideshow
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.ArtistSource
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.EventResource
@@ -63,7 +64,7 @@ import kotlinx.coroutines.delay
 
 //Home Screen
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel, cartViewModel: CartViewModel) {
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, authViewModel: AuthViewModel, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel) {
     var search by remember { mutableStateOf("") }
     val authState = authViewModel.authstate.observeAsState()
     var startAnimation by remember{ mutableStateOf(false) }
@@ -85,7 +86,7 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
             else -> Unit
         }
     }
-    ScreenWithTopBarAndBottomNav(navController = navController,showbackButton = false, cartViewModel) { innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController,showbackButton = false, cartViewModel, wishListViewModel) { innerPadding->
         Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)

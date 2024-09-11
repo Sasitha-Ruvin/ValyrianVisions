@@ -12,12 +12,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.Navbar.BottomNav
 import com.example.valyrianvisions.TopBar.TopBar
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 
 @Composable
 fun ScreenWithTopBarAndBottomNav(
     navController: NavController,
     showbackButton:Boolean = false,
     cartViewModel: CartViewModel,
+    wishListViewModel: WishListViewModel,
     content: @Composable (Modifier) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {

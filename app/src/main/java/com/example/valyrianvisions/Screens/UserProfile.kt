@@ -42,9 +42,10 @@ import com.example.valyrianvisions.Authentications.AuthState
 import com.example.valyrianvisions.Authentications.AuthViewModel
 import com.example.valyrianvisions.R
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 
 @Composable
-fun UserProfile(navController:NavController,authViewModel: AuthViewModel,cartViewModel: CartViewModel){
+fun UserProfile(navController:NavController,authViewModel: AuthViewModel,cartViewModel: CartViewModel, wishListViewModel: WishListViewModel){
     val authState by authViewModel.authstate.observeAsState()
     LaunchedEffect(authState) {
         if(authState is AuthState.Unauthenticated){
@@ -65,7 +66,7 @@ fun UserProfile(navController:NavController,authViewModel: AuthViewModel,cartVie
         targetValue = if(startAnimation) 0.dp else 3000.dp,
         animationSpec = tween(durationMillis = 400)
     )
-    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false, cartViewModel) {innerPadding->
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = false, cartViewModel, wishListViewModel) {innerPadding->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(2.dp)
@@ -160,10 +161,12 @@ fun UserInfoRow(label: String, value: String) {
         Text(
             text = label,
             fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = value,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 16.sp
         )
     }

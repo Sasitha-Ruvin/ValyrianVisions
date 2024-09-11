@@ -27,6 +27,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -52,10 +53,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.ProductItem
 import com.example.valyrianvisions.Screens.format
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.model.CartItem
+import com.example.valyrianvisions.model.WishlistItem
 
 @Composable
-fun ArtDetailedView(product:ProductItem, navController: NavController, cartViewModel: CartViewModel)
+fun ArtDetailedView(product:ProductItem, navController: NavController, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel)
 {
     var startAnimation by remember { mutableStateOf(false) }
 
@@ -75,7 +78,7 @@ fun ArtDetailedView(product:ProductItem, navController: NavController, cartViewM
     val price = product.price
     var selectedColor by remember { mutableStateOf(Color.Gray) }
 
-    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel =cartViewModel)
+    ScreenWithTopBarAndBottomNav(navController = navController, showbackButton = true, cartViewModel =cartViewModel, wishListViewModel)
     {
         innerPadding->
         Box(
@@ -112,8 +115,13 @@ fun ArtDetailedView(product:ProductItem, navController: NavController, cartViewM
                         fontSize = 24.sp
                     )
 
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Outlined.Bookmark, contentDescription = "Wishlist")
+                    TextButton(onClick = { val wishlistItem = WishlistItem(
+                        imageRes = product.imageResourceId,
+                        name = name,
+                        price = price)
+                        Toast.makeText(context, "Item added to Wishlist", Toast.LENGTH_SHORT).show()
+                        wishListViewModel.addItemToWish(wishlistItem)}) {
+                        Icon(imageVector = Icons.Outlined.BookmarkBorder, contentDescription = "Wishlist")
                     }
 
                 }

@@ -22,13 +22,14 @@ import com.example.valyrianvisions.Screens.SignUpScreen
 import com.example.valyrianvisions.Screens.SketchesScreen
 import com.example.valyrianvisions.Screens.UserProfile
 import com.example.valyrianvisions.Screens.WishlistScreen
+import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
 import com.example.valyrianvisions.data.SculptureSource
 import com.example.valyrianvisions.data.SketchSource
 
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, cartViewModel: CartViewModel){
+fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "login", builder = {
         composable("login"){
@@ -40,28 +41,28 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
 
         }
         composable("home"){
-            HomeScreen(modifier, navController, authViewModel, cartViewModel)
+            HomeScreen(modifier, navController, authViewModel, cartViewModel, wishListViewModel)
         }
         composable("cart"){
-            CartScreen(navController,cartViewModel )
+            CartScreen(navController,cartViewModel, wishListViewModel )
         }
         composable("profile"){
-            UserProfile(navController, authViewModel, cartViewModel)
+            UserProfile(navController, authViewModel, cartViewModel, wishListViewModel)
         }
         composable("products"){
-            ProductsScreen(navController, cartViewModel)
+            ProductsScreen(navController, cartViewModel, wishListViewModel)
         }
         composable("paintings"){
-            PaintingsScreen(navController,cartViewModel)
+            PaintingsScreen(navController,cartViewModel, wishListViewModel)
         }
         composable("sketches"){
-            SketchesScreen(navController,cartViewModel)
+            SketchesScreen(navController,cartViewModel, wishListViewModel)
         }
         composable("sculptures"){
-            SculpturesScrren(navController, cartViewModel)
+            SculpturesScrren(navController, cartViewModel, wishListViewModel)
         }
         composable("save"){
-            WishlistScreen(navController, cartViewModel)
+            WishlistScreen(navController, cartViewModel, wishListViewModel)
         }
 
 //        Routes for Detailed Featured Product View
@@ -72,7 +73,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             val productId = backStackEntry.arguments?.getInt("productId")
             val product = DataSource().loadPictures().find { it.imageResourceId == productId }
             product?.let {
-                DetailedProductView(picture = it, navController = navController, cartViewModel)
+                DetailedProductView(picture = it, navController = navController, cartViewModel, wishListViewModel)
             }
         }
 //        Route for detailed product view
@@ -94,7 +95,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             }
 
             product?.let {
-                ProductView(product = it, navController = navController, cartViewModel)
+                ProductView(product = it, navController = navController, cartViewModel, wishListViewModel)
             }
         }
 
@@ -114,7 +115,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
                 else -> null
             }
             product?.let {
-                ArtDetailedView(product = it, navController = navController, cartViewModel =cartViewModel )
+                ArtDetailedView(product = it, navController = navController, cartViewModel =cartViewModel, wishListViewModel )
             }
 
         }
