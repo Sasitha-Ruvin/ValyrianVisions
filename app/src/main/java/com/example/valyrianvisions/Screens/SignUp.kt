@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,13 +17,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonColors
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -45,6 +51,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +65,8 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
+    var gender by remember{ mutableStateOf("Male") }
+    var contact by remember{ mutableStateOf("") }
     val authState = authViewModel.authstate.observeAsState()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -142,7 +151,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                     textStyle = TextStyle(fontSize = 25.sp, color = Color.Black),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.Gray
+                        unfocusedContainerColor = Color.White
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
@@ -158,7 +167,7 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                     textStyle = TextStyle(fontSize = 25.sp, color = Color.Black),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.Gray
+                        unfocusedContainerColor = Color.White
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
@@ -176,10 +185,64 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, au
                     visualTransformation = PasswordVisualTransformation(),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.Gray
+                        unfocusedContainerColor = Color.White
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                TextField(value = contact, onValueChange = {contact = it},
+                    label = { Text("Contact") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White, RoundedCornerShape(12.dp)),
+                    textStyle = TextStyle(fontSize = 25.sp, color = Color.Black),
+                    keyboardOptions = KeyboardOptions( keyboardType = KeyboardType.Number),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 10.dp)
+                    ) {
+                        RadioButton(
+                            selected = gender == "Male",
+                            onClick = { gender = "Male" },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = Color.White,
+                                unselectedColor = Color.White
+                            )
+                        )
+
+                        Text("Male", style = MaterialTheme.typography.labelSmall,
+                            color = Color.White)
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = gender == "Female",
+                            onClick = { gender = "Female" },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = Color.White,
+                                unselectedColor = Color.White
+                            )
+
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Female", style = MaterialTheme.typography.labelSmall, color = Color.White)
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 

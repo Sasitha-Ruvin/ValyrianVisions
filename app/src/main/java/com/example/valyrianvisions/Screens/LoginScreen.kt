@@ -135,7 +135,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, aut
                 // Welcome Text
                 Text(
                     text = stringResource(R.string.LoginWelcome),
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
