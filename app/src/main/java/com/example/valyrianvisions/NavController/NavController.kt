@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.valyrianvisions.Authentications.AuthViewModel
-import com.example.valyrianvisions.CommonComps.ArtDetailedView
-import com.example.valyrianvisions.CommonComps.ProductView
+import com.example.valyrianvisions.CommonComps.DetailedViewUIs.ArtDetailedView
+import com.example.valyrianvisions.CommonComps.DetailedViewUIs.ProductView
 import com.example.valyrianvisions.Screens.DetailedProductView
 import com.example.valyrianvisions.Screens.HomeScreen
 import com.example.valyrianvisions.Screens.LoginScreen
@@ -22,6 +22,7 @@ import com.example.valyrianvisions.Screens.SignUpScreen
 import com.example.valyrianvisions.Screens.SketchesScreen
 import com.example.valyrianvisions.Screens.UserProfile
 import com.example.valyrianvisions.Screens.WishlistScreen
+import com.example.valyrianvisions.ViewModels.UserProfileViewModel
 import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.data.DataSource
 import com.example.valyrianvisions.data.PaintingsSource
@@ -29,7 +30,7 @@ import com.example.valyrianvisions.data.SculptureSource
 import com.example.valyrianvisions.data.SketchSource
 
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel){
+fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, cartViewModel: CartViewModel, wishListViewModel: WishListViewModel, userProfileViewModel: UserProfileViewModel){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "login", builder = {
         composable("login"){
@@ -47,7 +48,7 @@ fun AppNavigation(modifier: Modifier = Modifier,authViewModel: AuthViewModel, ca
             CartScreen(navController,cartViewModel, wishListViewModel )
         }
         composable("profile"){
-            UserProfile(navController, authViewModel, cartViewModel, wishListViewModel)
+            UserProfile(navController, authViewModel, cartViewModel, wishListViewModel, userProfileViewModel)
         }
         composable("products"){
             ProductsScreen(navController, cartViewModel, wishListViewModel)

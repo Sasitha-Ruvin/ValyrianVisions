@@ -1,4 +1,4 @@
-package com.example.valyrianvisions.CommonComps
+package com.example.valyrianvisions.CommonComps.ProdcutCards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

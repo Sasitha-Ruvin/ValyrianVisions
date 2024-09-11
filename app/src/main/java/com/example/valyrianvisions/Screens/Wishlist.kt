@@ -54,34 +54,53 @@ fun WishlistScreen(navController: NavController, cartViewModel: CartViewModel, w
             Divider()
             Spacer(modifier = Modifier.height(16.dp))
 
-            wishlist.forEach{item->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp))
-                {
-                    Image(painter = painterResource(id = item.imageRes), contentDescription = "Wishlist Image",
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Crop
+            if(wishlist.isEmpty()){
+                // Display message when wishlist is empty
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Your wishlist is empty!",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.weight(1f))
-                    {
-                        Text(text = item.name, style = MaterialTheme.typography.bodyLarge,color = MaterialTheme.colorScheme.onBackground)
-                        Text(text = "$${item.price}",style = MaterialTheme.typography.bodyMedium,color = MaterialTheme.colorScheme.onBackground,)
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Button( colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
-                        onClick = {wishListViewModel.removeWishlistItem(item)},
-                        )
-                    {
-                        Text(text = "Remove")
-
-                    }
-
                 }
+            }else{
+                wishlist.forEach{item->
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp))
+                    {
+                        Image(painter = painterResource(id = item.imageRes), contentDescription = "Wishlist Image",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f))
+                        {
+                            Text(text = item.name, style = MaterialTheme.typography.bodyLarge,color = MaterialTheme.colorScheme.onBackground)
+                            Text(text = "$${item.price}",style = MaterialTheme.typography.bodyMedium,color = MaterialTheme.colorScheme.onBackground,)
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Button( colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
+                            onClick = {wishListViewModel.removeWishlistItem(item)},
+                        )
+                        {
+                            Text(text = "Remove")
+
+                        }
+
+                    }
+                }
+
             }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Divider()

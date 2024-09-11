@@ -1,4 +1,4 @@
-package com.example.valyrianvisions.CommonComps
+package com.example.valyrianvisions.CommonComps.DetailedViewUIs
 
 import CartViewModel
 import android.widget.Toast
@@ -25,9 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
@@ -52,8 +50,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.ProductItem
-import com.example.valyrianvisions.Screens.format
 import com.example.valyrianvisions.ViewModels.WishListViewModel
 import com.example.valyrianvisions.model.CartItem
 import com.example.valyrianvisions.model.WishlistItem

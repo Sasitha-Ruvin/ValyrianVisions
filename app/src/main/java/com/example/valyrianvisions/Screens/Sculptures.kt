@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.Animations.LoadingCircle
-import com.example.valyrianvisions.CommonComps.ProductsGrid
+import com.example.valyrianvisions.CommonComps.ProdcutCards.ProductsGrid
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
 import com.example.valyrianvisions.CommonComps.SearchBar
 import com.example.valyrianvisions.ViewModels.WishListViewModel
