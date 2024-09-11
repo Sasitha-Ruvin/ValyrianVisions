@@ -115,7 +115,7 @@ fun WishlistScreen(navController: NavController, cartViewModel: CartViewModel, w
                 }
 
                 Button(onClick = { /* Implement Buy Functionality */ }) {
-                    Text("Buy")
+                    Text("Add to Cart")
                 }
             }
 

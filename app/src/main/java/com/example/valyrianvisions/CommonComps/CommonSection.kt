@@ -32,14 +32,14 @@ fun ScreenWithTopBarAndBottomNav(
         }
 
         // Bottom Navigation Bar
-        BottomNavSection(navController = navController)
+        BottomNavSection(navController = navController, wishListViewModel)
     }
 }
 
 
 
 @Composable
-fun BottomNavSection(navController: NavController) {
+fun BottomNavSection(navController: NavController, wishListViewModel: WishListViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +47,7 @@ fun BottomNavSection(navController: NavController) {
             .height(56.dp),
         contentAlignment = Alignment.Center
     ) {
-        BottomNav(navController = navController, modifier = Modifier,)
+        BottomNav(navController = navController, modifier = Modifier, wishListViewModel = wishListViewModel )
     }
 }
 
