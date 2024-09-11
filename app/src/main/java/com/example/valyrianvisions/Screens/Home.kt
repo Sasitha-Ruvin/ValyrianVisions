@@ -85,7 +85,8 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavController, auth
             .offset(x = offsetX)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
               Spacer(modifier = Modifier.height(5.dp))
 

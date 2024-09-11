@@ -64,4 +64,7 @@
     <string name="painting_6_description">This evocative painting depicts a solitary figure swinging from a tree branch against a backdrop of a fiery sunset. The silhouette of the figure, bathed in the warm glow of the orange and yellow hues, creates a sense of peace and tranquility. </string>
     <string name="painting_6_price">$20</string>
     <string name="new_events">New Events</string>
+    <string name="removeBtn">Remove</string>
+    <string name="clearBtn">Clear</string>
+    <string name="buyBtn">Buy</string>
 </resources>

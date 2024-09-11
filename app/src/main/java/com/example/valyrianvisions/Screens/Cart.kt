@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,10 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.R
 import com.example.valyrianvisions.ViewModels.WishListViewModel
 
 
@@ -56,26 +60,56 @@ fun CartScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            cartItems.forEach { item ->
-                Row(
+            if(cartItems.isEmpty()){
+                // Display message when Cart is empty
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = 32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(id = item.imageRes),
-                        contentDescription = item.name,
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Crop
+                    Text(
+                        text = "Your Cart is empty!",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(item.name, style = MaterialTheme.typography.bodyLarge)
-                        Text("$${item.price}", style = MaterialTheme.typography.bodyMedium)
+                }
+            }else
+            {
+                cartItems.forEach { item ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = item.imageRes),
+                            contentDescription = item.name,
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(item.name, style = MaterialTheme.typography.bodyLarge)
+                            Text("$${item.price}", style = MaterialTheme.typography.bodyMedium)
+                        }
+                        Column(
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Text("x ${item.quantity}", style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Button(
+                                onClick = { cartViewModel.removeItem(item) },
+                                modifier = Modifier.size(width = 80.dp, height = 36.dp),
+                                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
+                            ) {
+                                Text(stringResource(R.string.removeBtn), style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
                     }
-                    Text("x ${item.quantity}", style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
@@ -108,11 +142,11 @@ fun CartScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = { cartViewModel.clearCart() }) {
-                    Text("Clear")
+                    Text(stringResource(R.string.clearBtn))
                 }
 
-                Button(onClick = { /* Implement Buy Functionality */ }) {
-                    Text("Buy")
+                Button(onClick = { /* TODO*/ }) {
+                    Text(stringResource(R.string.buyBtn))
                 }
             }
         }

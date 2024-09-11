@@ -24,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.valyrianvisions.CommonComps.ScreenWithTopBarAndBottomNav
+import com.example.valyrianvisions.R
 import com.example.valyrianvisions.ViewModels.WishListViewModel
 
 @Composable
@@ -92,7 +94,7 @@ fun WishlistScreen(navController: NavController, cartViewModel: CartViewModel, w
                             onClick = {wishListViewModel.removeWishlistItem(item)},
                         )
                         {
-                            Text(text = "Remove")
+                            Text(text = stringResource(R.string.removeBtn))
 
                         }
 
@@ -110,11 +112,11 @@ fun WishlistScreen(navController: NavController, cartViewModel: CartViewModel, w
             Row( modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly)
             {
-                Button(onClick = { wishListViewModel.clearWish() }) {
-                    Text("Clear")
+                Button(onClick = { wishListViewModel.clearWish() }, modifier = Modifier.width(150.dp)) {
+                    Text(text = stringResource(R.string.clearBtn))
                 }
 
-                Button(onClick = { /* Implement Buy Functionality */ }) {
+                Button(onClick = { /* Implement Buy Functionality */ },modifier = Modifier.width(150.dp)) {
                     Text("Add to Cart")
                 }
             }
