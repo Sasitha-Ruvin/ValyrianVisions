@@ -103,7 +103,7 @@ fun CartScreen(
                             Spacer(modifier = Modifier.height(4.dp))
                             Button(
                                 onClick = { cartViewModel.removeItem(item) },
-                                modifier = Modifier.size(width = 80.dp, height = 36.dp),
+                                modifier = Modifier.size(width = 100.dp, height = 36.dp),
                                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
                             ) {
                                 Text(stringResource(R.string.removeBtn), style = MaterialTheme.typography.bodySmall)
